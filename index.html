@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Йога-нидра 1 — Санкальпа, ротация сознания, чидакаша</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink: #0D0E14;
+    --ink-2: #14151F;
+    --line: #262837;
+    --off-white: #F0EDE6;
+    --off-white-dim: #A8A6A0;
+    --brass: #C9A96E;
+    --brass-dim: #7A6B4C;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html, body{
+    height:100%;
+    background: var(--ink);
+    color: var(--off-white);
+    font-family: 'IBM Plex Mono', monospace;
+    overflow-x:hidden;
+  }
+
+  body{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    min-height:100vh;
+    padding: 32px 24px;
+    position:relative;
+  }
+
+  /* chidakasha — the space of consciousness, breathing behind everything */
+  .chidakasha{
+    position:fixed;
+    top:50%; left:50%;
+    width:140vmax; height:140vmax;
+    transform:translate(-50%,-50%);
+    background: radial-gradient(circle at center, rgba(201,169,110,0.08) 0%, rgba(201,169,110,0.03) 22%, rgba(13,14,20,0) 45%);
+    animation: breathe 11s ease-in-out infinite;
+    pointer-events:none;
+    z-index:0;
+  }
+  @keyframes breathe{
+    0%, 100% { opacity:.55; transform:translate(-50%,-50%) scale(0.94); }
+    50% { opacity:1; transform:translate(-50%,-50%) scale(1.04); }
+  }
+
+  .wrap{
+    position:relative;
+    z-index:1;
+    width:100%;
+    max-width: 480px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+  }
+
+  .eyebrow{
+    font-size:11px;
+    letter-spacing:0.28em;
+    text-transform:uppercase;
+    color: var(--brass);
+    margin-bottom: 18px;
+    opacity:.85;
+  }
+
+  h1{
+    font-family:'Fraunces', serif;
+    font-weight:400;
+    font-optical-sizing:auto;
+    font-size: clamp(30px, 7vw, 44px);
+    line-height:1.15;
+    color: var(--off-white);
+    margin-bottom: 14px;
+  }
+
+  .subtitle{
+    font-size: 13px;
+    letter-spacing:0.04em;
+    color: var(--off-white-dim);
+    line-height:1.7;
+    margin-bottom: 56px;
+  }
+  .subtitle span{ color: var(--brass-dim); }
+
+  /* player */
+  .player{
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap: 28px;
+  }
+
+  .play-ring{
+    position:relative;
+    width: 128px;
+    height: 128px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    background: var(--ink-2);
+    border: 1px solid var(--line);
+    transition: border-color .3s ease;
+  }
+  .play-ring:hover{ border-color: var(--brass-dim); }
+
+  .play-ring svg.progress-ring{
+    position:absolute;
+    top:0; left:0;
+    width:128px; height:128px;
+    transform: rotate(-90deg);
+  }
+  .progress-ring circle{
+    fill:none;
+    stroke-width:1;
+  }
+  .progress-ring .track{ stroke: var(--line); }
+  .progress-ring .fill{
+    stroke: var(--brass);
+    stroke-linecap:round;
+    transition: stroke-dashoffset .15s linear;
+  }
+
+  .play-icon{
+    position:relative;
+    z-index:2;
+    width:0; height:0;
+    border-top: 11px solid transparent;
+    border-bottom: 11px solid transparent;
+    border-left: 18px solid var(--off-white);
+    margin-left:5px;
+  }
+  .pause-icon{
+    position:relative;
+    z-index:2;
+    display:none;
+    gap:6px;
+  }
+  .pause-icon span{
+    width:5px; height:22px;
+    background: var(--off-white);
+    display:block;
+  }
+  .play-ring.playing .play-icon{ display:none; }
+  .play-ring.playing .pause-icon{ display:flex; }
+
+  .time-row{
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    font-size:11px;
+    letter-spacing:0.05em;
+    color: var(--off-white-dim);
+  }
+
+  .scrub{
+    width:100%;
+    -webkit-appearance:none;
+    appearance:none;
+    height:1px;
+    background: var(--line);
+    outline:none;
+    cursor:pointer;
+  }
+  .scrub::-webkit-slider-thumb{
+    -webkit-appearance:none;
+    width:11px; height:11px;
+    border-radius:50%;
+    background: var(--brass);
+    cursor:pointer;
+    box-shadow: 0 0 0 4px rgba(201,169,110,0.12);
+  }
+  .scrub::-moz-range-thumb{
+    width:11px; height:11px;
+    border:none;
+    border-radius:50%;
+    background: var(--brass);
+    cursor:pointer;
+    box-shadow: 0 0 0 4px rgba(201,169,110,0.12);
+  }
+
+  .meta{
+    margin-top: 64px;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--off-white-dim);
+    opacity:.6;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .chidakasha{ animation:none; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="chidakasha"></div>
+
+  <div class="wrap">
+    <div class="eyebrow">Спокойное место</div>
+    <h1>Йога-нидра 1</h1>
+    <div class="subtitle">Санкальпа <span>·</span> Ротация сознания <span>·</span> Чидакаша</div>
+
+    <div class="player">
+      <div class="play-ring" id="playRing">
+        <svg class="progress-ring" viewBox="0 0 128 128">
+          <circle class="track" cx="64" cy="64" r="60"></circle>
+          <circle class="fill" id="ringFill" cx="64" cy="64" r="60"
+                   stroke-dasharray="377" stroke-dashoffset="377"></circle>
+        </svg>
+        <div class="play-icon" id="playIcon"></div>
+        <div class="pause-icon" id="pauseIcon"><span></span><span></span></div>
+      </div>
+
+      <div style="width:100%; display:flex; flex-direction:column; gap:10px;">
+        <input type="range" class="scrub" id="scrub" value="0" min="0" max="100" step="0.1">
+        <div class="time-row">
+          <span id="currentTime">0:00</span>
+          <span id="duration">—:—</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="meta">Слушайте в тишине, лёжа, с закрытыми глазами</div>
+  </div>
+
+  <audio id="audio" src="01_sankalpa.mp3" preload="metadata"></audio>
+
+  <script>
+    const audio = document.getElementById('audio');
+    const playRing = document.getElementById('playRing');
+    const scrub = document.getElementById('scrub');
+    const currentTimeEl = document.getElementById('currentTime');
+    const durationEl = document.getElementById('duration');
+    const ringFill = document.getElementById('ringFill');
+    const CIRC = 377; // 2 * PI * 60
+
+    function fmt(s){
+      if(!isFinite(s)) return '—:—';
+      const m = Math.floor(s/60);
+      const sec = Math.floor(s%60).toString().padStart(2,'0');
+      return `${m}:${sec}`;
+    }
+
+    audio.addEventListener('loadedmetadata', () => {
+      durationEl.textContent = fmt(audio.duration);
+      scrub.max = audio.duration;
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      currentTimeEl.textContent = fmt(audio.currentTime);
+      if(!scrub.dragging){
+        scrub.value = audio.currentTime;
+      }
+      const pct = audio.duration ? audio.currentTime / audio.duration : 0;
+      ringFill.style.strokeDashoffset = CIRC - (pct * CIRC);
+    });
+
+    audio.addEventListener('ended', () => {
+      playRing.classList.remove('playing');
+    });
+
+    playRing.addEventListener('click', () => {
+      if(audio.paused){
+        audio.play();
+        playRing.classList.add('playing');
+      } else {
+        audio.pause();
+        playRing.classList.remove('playing');
+      }
+    });
+
+    scrub.addEventListener('input', () => {
+      scrub.dragging = true;
+      currentTimeEl.textContent = fmt(scrub.value);
+      const pct = audio.duration ? scrub.value / audio.duration : 0;
+      ringFill.style.strokeDashoffset = CIRC - (pct * CIRC);
+    });
+    scrub.addEventListener('change', () => {
+      audio.currentTime = scrub.value;
+      scrub.dragging = false;
+    });
+  </script>
+
+</body>
+</html>
